@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    image: ealen/echo-server:latest
+    expose:
+      - 80
+    restart: always
+  simple-web:
+    image: yeasy/simple-web
+    expose:
+      - 80
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 7780:7780
+    volumes:
+      - ./server.conf:/etc/nginx/conf.d/server.conf
+    depends_on:
+      - app
+      - simple-web
+    restart: always
